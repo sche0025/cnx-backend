@@ -1,10 +1,10 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-require('dotenv').config();
-
 const dealerRoutes = require('./Dealer/dealer');
 const vehicleRoutes = require('./Vehicle/vehicle');
 const app = express();
+const port = process.env.PORT || 5000;
+require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use((req,res,next)=>{
@@ -18,10 +18,11 @@ app.use((req,res,next)=>{
     next();
 })
 
+
 app.use('/', dealerRoutes);
 app.use('/', vehicleRoutes);
 
-const server = app.listen(5000, () => console.log('Server ready'));
+const server = app.listen(port, () => console.log('Server ready'));
 
 process.on('SIGTERM', () => {
   server.close(() => {
